@@ -2,6 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import InstaStory from '../InstaStory';
 import Button from '@material-ui/core/Button';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -24,12 +26,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '2.5em',
     width: '50%'
   },
-  story: {
+  storyMockup: {
     width: '32em',
     height: '57em',
     backgroundColor: 'red',
     borderRadius: '8px',
-    overflow: 'hidden',
     position: 'relative',
   },
   gradient: {
@@ -80,6 +81,46 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '1em',
     color: '#aaaaaa',
   },
+  arrowWrapper: {
+      position: 'absolute',
+      top: '50%',
+      width: '100%',
+      display:'flex',
+      justifyContent: 'space-between',
+      zIndex: '100',
+
+  },
+  arrowLeft: {
+      width:'30px',
+      height: '30px',
+      backgroundColor: 'rgba(0,0,0,0.2)',
+      marginLeft: '-50px',
+      borderRadius: '100%',
+      minWidth: '0px',
+      padding: '0'
+  },
+  arrowRight: {
+    width:'30px',
+    height: '30px',
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    marginRight: '-50px',
+    borderRadius: '100%',
+    minWidth: '0px',
+    padding: '0'
+  },
+  arrowIconLeft: {
+    marginTop: '6px',
+    marginLeft: '7px'
+  },
+  arrowIconRight: {
+    marginTop: '6px',
+    marginLeft: '4px'
+},
+    instaStories: {
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden'
+}
 }));
 
 function trimSummary(storyState) {
@@ -114,7 +155,20 @@ function StoryPreview(props) {
         <div className={classes.title}>Vorschau</div>
         <Button size="small" color="secondary" onClick={() => { props.moveImg()}}>Bild anpassen</Button>
       </div>
-      <div className={classes.story}>
+      <div className={classes.storyMockup}>
+          <div className={classes.arrowWrapper}>
+              <Button className={classes.arrowLeft}>
+                  <div  className={classes.arrowIconLeft}>
+                    <ArrowBackIosIcon></ArrowBackIosIcon>
+                  </div>
+                  
+              </Button>
+              <Button className={classes.arrowRight}>
+                <div  className={classes.arrowIconRight}>
+                    <ArrowForwardIosIcon></ArrowForwardIosIcon>
+                </div>
+              </Button>
+          </div>
         <div className={classes.storyTop}>
           <div className={classes.storyBar}>
             <div className={classes.storyBarProgress}></div>
@@ -126,6 +180,7 @@ function StoryPreview(props) {
           </div>
         </div>
         <div className={classes.gradient}></div>
+        <div className={classes.instaStories}>
         <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState)}></InstaStory>
         <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState)}></InstaStory>
       </div>
