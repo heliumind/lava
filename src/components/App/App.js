@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Header from '../Header';
 import NewsInput from '../NewsInput';
+import StoryPreview from '../StoryPreview';
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -44,7 +45,7 @@ function App() {
           <NewsInput />
         </Grid>
         <Grid item xs={12} sm={8} md={5} className={classes.image}>
-          Story preview
+          <StoryPreview></StoryPreview>
         </Grid>
       </Grid>
     </div>
