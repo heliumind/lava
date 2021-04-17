@@ -11,9 +11,8 @@ import Header from '../Header';
 import NewsInput from '../NewsInput';
 import StoryPreview from '../StoryPreview';
 
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
   storyPreview: {
-    background: 'rgb(92,92,92)',
     background: 'radial-gradient(circle, rgba(92,92,92,1) 0%, rgba(0,0,0,1) 100%)'
   },
   root: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '50px',
     height: '100vh',
   },
-}));
+});
 
 class App extends React.Component {
   constructor(props) {
