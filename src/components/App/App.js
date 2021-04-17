@@ -73,7 +73,8 @@ class App extends React.Component {
             />
           </Grid>
           <Grid item xs={12} sm={8} md={5} className={classes.storyPreview}>
-            <StoryPreview storyState={this.state.summaries[0]} imgState={this.state.imgURL}></StoryPreview>
+            {console.log(this.state.imgURL)}
+            <StoryPreview storyState={this.state.summaries[0]} imgURL={this.state.imgURL}></StoryPreview>
           </Grid>
         </Grid>
       </div>

@@ -78,6 +78,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function trimSummary(storyState) {
+  
+}
+
 function StoryPreview(props) {
   const classes = useStyles();
 
@@ -98,8 +102,8 @@ function StoryPreview(props) {
           </div>
         </div>
         <div className={classes.gradient}></div>
-        <InstaStory storyState={props.storyState}></InstaStory>
-        <InstaStory storyState={props.storyState}></InstaStory>
+        <InstaStory imgURL={props.imgURL} imgPosition={'center'} storyState={props.storyState}></InstaStory>
+        <InstaStory imgURL={props.imgURL} imgPosition={'center'} storyState={props.storyState}></InstaStory>
       </div>
     </div>
   );

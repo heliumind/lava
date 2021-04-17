@@ -14,11 +14,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     height: '55%',
     width: '100%',
-    backgroundImage:
-      'url("https://img.br.de/66e5975b-3efc-49c8-bbd7-9522b0658815.jpeg?q=80&rect=8%2C174%2C5255%2C2958&w=2000")',
+    backgroundImage: (props) => 'url("' + props.imgURL + '")',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'right',
+    backgroundPosition: (props) => props.imgPosition,
   },
   hashtagsWrapper: {
     position: 'absolute',
@@ -60,11 +59,15 @@ const useStyles = makeStyles((theme) => ({
 
 function getNthHashtag(hashtags, index) {
   hashtags = hashtags.split(', ');
-  return hashtags.length > index ? hashtags[index] : '';
+  var ht = hashtags.length > index ? hashtags[index] : '';
+  if(ht.length > 2 &&  !ht.startsWith("#")) {
+    ht = "#" + ht;
+  }
+  return ht;
 }
 
 function InstaStory(props) {
-  const classes = useStyles();
+  const classes = useStyles(props);
 
   return (
       <div className={classes.story}>
