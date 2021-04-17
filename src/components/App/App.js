@@ -19,12 +19,12 @@ const styles = (theme) => ({
 });
 
 function trimArticle(text) {
-  var trimmed = text.split('\n');
+  var trimmed = text.split('.');
   var shortned = "";
 
   var idx = 0;
-  while(shortned.split(' ').length < 150 && idx < trimmed.length) {
-    shortned += trimmed[idx] + "\n";
+  while(shortned.split(' ').length < 80 && idx < trimmed.length) {
+    shortned += trimmed[idx] + ".";
     idx++;
   }
   console.log("Shortened: " + shortned);
@@ -35,16 +35,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgURL: '',
-      text: {},
-      summaries: [
-        {
-          Schlagzeile: '',
-          Zusammenfassung: '',
-          Hashtag: '',
-        },
-      ],
-      test: true,
+          imgURL: '',
+          imgPosition: '',
+          text: {},
+          summaries: [
+            {
+              Schlagzeile: 'Schlagzeile',
+              Zusammenfassung: 'Zusammenfassung',
+              Hashtag: '#, #, #,',
+            },
+          ],
+          test: true,
     };
   }
 
@@ -58,11 +59,12 @@ class App extends React.Component {
             <NewsInput
               onExtract={(img) => {
                 this.setState({
-                  imgURL: img,
+                    imgURL: img,
+                    imgPosition: 'center',
                 });
               }}
               onClick={(input) => {
-                createPrompt(input['articleText'], (response) => {
+                createPrompt(trimArticle(input['articleText']), (response) => {
                   this.setState({
                     text: {},
                     summaries: [response],
@@ -74,7 +76,28 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={12} sm={8} md={5} className={classes.storyPreview}>
             {console.log(this.state.imgURL)}
-            <StoryPreview storyState={this.state.summaries[0]} imgURL={this.state.imgURL}></StoryPreview>
+            <StoryPreview storyState={this.state.summaries[0]}
+                          imgURL={this.state.imgURL}
+                          imgPosition={this.state.imgPosition}
+                          moveImg={() => {
+                              switch (this.state.imgPosition) {
+                                  case 'right':
+                                      this.setState({
+                                          imgPosition: 'center',
+                                      });
+                                      break;
+                                  case 'center':
+                                      this.setState({
+                                          imgPosition: 'left',
+                                      });
+                                      break;
+                                  default:
+                                      this.setState({
+                                          imgPosition: 'right',
+                                      });
+                              }
+                          }}
+            />
           </Grid>
         </Grid>
       </div>

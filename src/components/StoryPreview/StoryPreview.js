@@ -83,7 +83,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function trimSummary(storyState) {
-  
+  storyState = Object.assign({}, storyState);
+  var tokens = storyState.Schlagzeile.length*2;
+  var summarySplit = storyState.Zusammenfassung.split(".");
+  var summary = "";
+
+
+
+
+  var idx = 0;
+  while(idx < summarySplit.length && tokens+summarySplit[idx].length < 300){
+
+    summary += summarySplit[idx] + ".";
+    tokens+=summarySplit[idx].length;
+    idx++;
+  }
+  storyState.Zusammenfassung = summary.replace("..", ".");
+
+  console.log("Tokens: " + tokens);
+
+  return storyState;
 }
 
 function StoryPreview(props) {
@@ -93,7 +112,7 @@ function StoryPreview(props) {
     <div className={classes.container}>
       <div className={classes.titleWrapper}>
         <div className={classes.title}>Vorschau</div>
-        <Button size="small" color="secondary">Bild anpassen</Button>
+        <Button size="small" color="secondary" onClick={() => { props.moveImg()}}>Bild anpassen</Button>
       </div>
       <div className={classes.story}>
         <div className={classes.storyTop}>
@@ -107,8 +126,8 @@ function StoryPreview(props) {
           </div>
         </div>
         <div className={classes.gradient}></div>
-        <InstaStory imgURL={props.imgURL} imgPosition={'center'} storyState={props.storyState}></InstaStory>
-        <InstaStory imgURL={props.imgURL} imgPosition={'center'} storyState={props.storyState}></InstaStory>
+        <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState)}></InstaStory>
+        <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState)}></InstaStory>
       </div>
     </div>
   );
