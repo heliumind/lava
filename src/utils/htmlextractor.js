@@ -1,6 +1,6 @@
 
 
-function extractSiteContent(url, token, callback) {
+function extractSiteContent(url, callback) {
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
