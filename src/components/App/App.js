@@ -1,5 +1,8 @@
 import React from 'react';
 import logo from '../../assets/logo.svg';
+import './App.css';
+import createPrompt from '../../utils/connectGpt3';
+import article from '../../assets/samples/article.txt';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -48,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+  fetch(article)
+  .then(response => response.text())
+  .then(text => createPrompt(text));
+
   return (
     <div>
       <Header />
