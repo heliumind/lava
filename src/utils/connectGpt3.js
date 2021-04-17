@@ -24,7 +24,7 @@ const base_params = {
   "frequency_penalty": 1,
   "n": 1,
   "best_of": 1,
-  "stop": "\n\n"
+  "stop": "Lese diese"
 };
 const vereinfacht_endpoint = "https://api.openai.com/v1/engines/curie-instruct-beta/completions";
 const vereinfacht_params = {

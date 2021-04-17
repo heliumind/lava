@@ -1,16 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
+import InstaStory from '../InstaStory';
 import Button from '@material-ui/core/Button';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -18,16 +11,26 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    fontSize: '10px',
+  },
+  titleWrapper: {
+    width: '32em',
+    textAlign: 'left',
+    color: '#fff',
+    fontWeight: 'bold',
+    margin: '1em 0',
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   title: {
-    textAlign: "left"
+    fontSize: '2.5em',
+    width: '50%'
   },
-  story: {
-    width: '450px',
-    height: '800px',
-    backgroundColor: "red",
+  storyMockup: {
+    width: '32em',
+    height: '57em',
+    backgroundColor: 'red',
     borderRadius: '8px',
-    overflow: 'hidden',
     position: 'relative',
   },
   gradient: {
@@ -36,111 +39,152 @@ const useStyles = makeStyles((theme) => ({
     left: '0',
     width: '100%',
     height: '20%',
-    background: 'transparent linear-gradient(180deg, #000000B2 0%, #00000000 100%) 0% 0% no-repeat padding-box',
-    zIndex: '10'
+    background:
+      'transparent linear-gradient(180deg, #000000B2 0%, #00000000 100%) 0% 0% no-repeat padding-box',
+    zIndex: '10',
   },
   storyTop: {
     position: 'absolute',
     top: '0px',
     width: '100%',
-    padding: '15px',
-    zIndex: '20'
-
+    padding: '1em',
+    zIndex: '20',
   },
   storyBar: {
     width: '100%',
-    height: '5px',
+    height: '0.3em',
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: '5px',
   },
   storyBarProgress: {
     width: '50%',
-    height: '5px',
+    height: '100%',
     backgroundColor: '#FFFFFF',
     borderRadius: '5px',
   },
   storyInfo: {
-    margin: '20px 0px',
-    color: '#ffffff'
-
+    margin: '1em 0px',
+    color: '#ffffff',
+    fontSize: '1.2em',
   },
   storyLogo: {
     display: 'inline-block',
-    marginBottom: '-10px',
-    marginRight: '10px',
-    width: '30px',
-    height: '30px',
+    marginBottom: '-0.8em',
+    marginRight: '0.8em',
+    width: '2.5em',
+    height: '2.5em',
     borderRadius: '100%',
-    backgroundColor: '#33AAFF'
+    backgroundColor: '#33AAFF',
   },
-storyTime: {
+  storyTime: {
     display: 'inline-block',
-    marginLeft: '15px',
-    color: '#aaaaaa'
-    },
-    storyImg: {
-        height: '60%',
-        width: '100%',
-        backgroundImage: 'url("https://img.br.de/66e5975b-3efc-49c8-bbd7-9522b0658815.jpeg?q=80&rect=8%2C174%2C5255%2C2958&w=2000")',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'left',
+    marginLeft: '1em',
+    color: '#aaaaaa',
+  },
+  arrowWrapper: {
+      position: 'absolute',
+      top: '50%',
+      width: '100%',
+      display:'flex',
+      justifyContent: 'space-between',
+      zIndex: '100',
 
-        },
-    storyContent: {
-        height: '40%',
+  },
+  arrowLeft: {
+      width:'30px',
+      height: '30px',
+      backgroundColor: 'rgba(0,0,0,0.2)',
+      marginLeft: '-50px',
+      borderRadius: '100%',
+      minWidth: '0px',
+      padding: '0'
+  },
+  arrowRight: {
+    width:'30px',
+    height: '30px',
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    marginRight: '-50px',
+    borderRadius: '100%',
+    minWidth: '0px',
+    padding: '0'
+  },
+  arrowIconLeft: {
+    marginTop: '6px',
+    marginLeft: '7px'
+  },
+  arrowIconRight: {
+    marginTop: '6px',
+    marginLeft: '4px'
+},
+    instaStories: {
         width: '100%',
-        padding: '45px',
-        backgroundColor: '#FFF',
-        textAlign: 'center',
-    },
-    storyTitleWrapper: {
-        fontSize: '2rem',
-        fontWeight: 'bold',
-        backgroundColor: '#222'
-    },
-    storyTitle: {
-        color: '#fff'
-    },
-    storyText: {
-        textAlign: 'left',
-        fontSize: '1.2rem',
-    },
-
+        height: '100%',
+        overflow: 'hidden'
+}
 }));
 
-function StoryPreview() {
+function trimSummary(storyState) {
+  storyState = Object.assign({}, storyState);
+  var tokens = storyState.Schlagzeile.length*2;
+  var summarySplit = storyState.Zusammenfassung.split(".");
+  var summary = "";
+
+
+
+
+  var idx = 0;
+  while(idx < summarySplit.length && tokens+summarySplit[idx].length < 300){
+
+    summary += summarySplit[idx] + ".";
+    tokens+=summarySplit[idx].length;
+    idx++;
+  }
+  storyState.Zusammenfassung = summary.replace("..", ".");
+
+  console.log("Tokens: " + tokens);
+
+  return storyState;
+}
+
+function StoryPreview(props) {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
-        <h2 className={classes.title}>Vorschau</h2>
-        <div className={classes.story}>
-            <div className={classes.storyTop}>
-                <div className={classes.storyBar}>
-                    <div className={classes.storyBarProgress}></div>
+      <div className={classes.titleWrapper}>
+        <div className={classes.title}>Vorschau</div>
+        <Button size="small" color="secondary" onClick={() => { props.moveImg()}}>Bild anpassen</Button>
+      </div>
+      <div className={classes.storyMockup}>
+          <div className={classes.arrowWrapper}>
+              <Button className={classes.arrowLeft}>
+                  <div  className={classes.arrowIconLeft}>
+                    <ArrowBackIosIcon></ArrowBackIosIcon>
+                  </div>
+                  
+              </Button>
+              <Button className={classes.arrowRight}>
+                <div  className={classes.arrowIconRight}>
+                    <ArrowForwardIosIcon></ArrowForwardIosIcon>
                 </div>
-                <div className={classes.storyInfo}>
-                    <span className={classes.storyLogo}></span>
-                    <span>Deine Story</span>
-                    <span className={classes.storyTime}>3h</span>
-                </div>
-            </div>
-            <div className={classes.gradient}></div>
-            <div className={classes.storyImg}></div>
-            <div className={classes.storyContent}>
-                <div className={classes.storyTitleWrapper}>
-                    <div className={classes.storyTitle}>"Stimmung aggressiv"</div>
-                </div>
-                <div className={classes.storyText}>
-                <p>
-                Im Kampf um die Unions-Kanzlerkandidatur ist weiter keine Einigung zwischen CDU-Chef Laschet und dem CSU-Vorsitzenden Söder in Sicht.
-                </p>
-                </div>
-
-            </div>
+              </Button>
+          </div>
+        <div className={classes.storyTop}>
+          <div className={classes.storyBar}>
+            <div className={classes.storyBarProgress}></div>
+          </div>
+          <div className={classes.storyInfo}>
+            <span className={classes.storyLogo}></span>
+            <span>Deine Story</span>
+            <span className={classes.storyTime}>3h</span>
+          </div>
         </div>
-        <p>StoryPreview</p>
+        <div className={classes.gradient}></div>
+        <div className={classes.instaStories}>
+        <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState)}></InstaStory>
+        <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState)}></InstaStory>
+      </div>
+      </div>
     </div>
   );
 }
