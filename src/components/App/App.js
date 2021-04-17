@@ -30,13 +30,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App() {
-  const classes = useStyles();
-  fetch(article)
-  .then(response => response.text())
-  .then(text => createPrompt(text));
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: {},
+      summaries: [
+        {
+          Schlagzeile: '',
+          Zusammenfassung: '',
+          Hashtag: '',
+        },
+      ],
+      test: true,
+    };
 
-  return (
+    const classes = useStyles();
+    fetch(article)
+      .then((response) => response.text())
+      .then((text) => createPrompt(text));
+  }
+
+  setText(input) {
+    this.setState({
+      text: input,
+    });
+  }
+
+  render() {
     <div>
       <Header />
       <Grid container component="main" className={classes.root}>
@@ -49,14 +70,14 @@ function App() {
           elevation={6}
           square
         >
-          <NewsInput />
+          <NewsInput onClick={(input) => this.setText(input)} />
         </Grid>
         <Grid item xs={12} sm={8} md={5} className={classes.image}>
           <StoryPreview></StoryPreview>
         </Grid>
       </Grid>
-    </div>
-  );
+    </div>;
+  }
 }
 
 export default App;

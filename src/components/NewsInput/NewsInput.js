@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewsInput() {
+function NewsInput(props) {
   const classes = useStyles();
 
   return (
@@ -38,6 +38,7 @@ function NewsInput() {
           setSubmitting(true);
           // make async call
           console.log('submit: ', data);
+          props.onClick(data);
           setSubmitting(false);
         }}
       >
