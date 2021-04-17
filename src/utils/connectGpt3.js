@@ -32,22 +32,22 @@ function generatePrompt(text){
   return prompt;
 }
 
-function createPrompt(text){
+function createPrompt(text, callback){
   var prompt = generatePrompt(text);
 
   var samples = [example1, response1, example2, response2];
   
-  var promise = Promise.all(samples.map(sample =>
+  Promise.all(samples.map(sample =>
     fetch(sample).then(resp => resp.text())
     )).then(texts => {
         var sample1 = generateExample(texts[0],texts[1]);
         var sample2 = generateExample(texts[2],texts[3]);
         prompt = sample1 + sample2 + prompt;
         return prompt;
-    }).then(prompt => fetchGpt3Response(prompt, GPT3_ENDPOINT, GPT3_PARAMS));
+    }).then(prompt => fetchGpt3Response(prompt, GPT3_ENDPOINT, GPT3_PARAMS, callback));
 }
 
-async function fetchGpt3Response(prompt, url, gptParams){
+async function fetchGpt3Response(prompt, url, gptParams, callback){
     const apiKey = process.env.REACT_APP_OPENAI_SECRET_KEY
     const headers = {
       'Authorization': `Bearer ${apiKey}`,
@@ -62,17 +62,18 @@ async function fetchGpt3Response(prompt, url, gptParams){
       data: gptParams,
       headers: headers
     }).then((response) => {
-      parseResponse(response.data.choices[0].text);
+      parseResponse(response.data.choices[0].text, callback);
     }, (error) => {
       console.log(error);
     });
 }
 
-function parseResponse(text){
+function parseResponse(text, callback){
   var arrayOfLines = text.match(/[^\r\n]+/g);
   console.log("Array of Lines", arrayOfLines);
   var result = {"Schlagzeile": arrayOfLines[1].substring(3), "Zusammenfassung": arrayOfLines[2].substring(3), "Hashtag": arrayOfLines[3].substring(3)};
   console.log("Result", result);
+  callback(result);
   return result;
 }
 

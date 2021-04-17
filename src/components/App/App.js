@@ -49,11 +49,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function setResponse(){
+  
+}
+
 function App() {
   const classes = useStyles();
   fetch(article)
   .then(response => response.text())
-  .then(text => createPrompt(text));
+  .then(text => createPrompt(text, setResponse));
 
   return (
     <div>
