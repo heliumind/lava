@@ -30,7 +30,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function setResponse(){
+function basePromptCallback(){
+  
+}
+
+function vereinfachtPromptCallback(){
   
 }
 
@@ -38,7 +42,7 @@ function App() {
   const classes = useStyles();
   fetch(article)
   .then(response => response.text())
-  .then(text => createPrompt(text, setResponse));
+  .then(text => createPrompt(text, [basePromptCallback, vereinfachtPromptCallback], "base"));
 
   return (
     <div>
