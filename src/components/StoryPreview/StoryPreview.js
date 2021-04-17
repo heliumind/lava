@@ -69,7 +69,8 @@ const useStyles = makeStyles((theme) => ({
   },
   storyInfo: {
     margin: '1em 0px',
-    color: '#ffffff'
+    color: '#ffffff',
+    fontSize: '1.2em'
 
   },
   storyLogo: {
@@ -88,7 +89,7 @@ storyTime: {
     },
 storyImg: {
     position: 'relative',
-    height: '60%',
+    height: '55%',
     width: '100%',
     backgroundImage: 'url("https://img.br.de/66e5975b-3efc-49c8-bbd7-9522b0658815.jpeg?q=80&rect=8%2C174%2C5255%2C2958&w=2000")',
     backgroundSize: 'cover',
@@ -112,7 +113,7 @@ storyImg: {
         marginRight: '1.2em'
     },
 storyContent: {
-    height: '40%',
+    height: '45%',
     width: '100%',
     padding: '3em',
     backgroundColor: '#FFF',

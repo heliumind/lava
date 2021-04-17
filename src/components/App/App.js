@@ -16,9 +16,7 @@ const styles = theme => ({
     background: 'radial-gradient(circle, rgba(92,92,92,1) 0%, rgba(0,0,0,1) 100%)'
   },
   root: {
-    paddingTop: '20px',
-    paddingLeft: '50px',
-    paddingRight: '50px',
+    padding: '0',
     height: '100vh',
   },
 });
@@ -52,7 +50,6 @@ class App extends React.Component {
             xs={false}
             sm={4}
             md={7}
-            component={Paper}
             elevation={6}
             square
         >
