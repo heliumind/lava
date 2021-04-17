@@ -19,12 +19,12 @@ const styles = (theme) => ({
 });
 
 function trimArticle(text) {
-  var trimmed = text.split('\n');
+  var trimmed = text.split('.');
   var shortned = "";
 
   var idx = 0;
-  while(shortned.split(' ').length < 150 && idx < trimmed.length) {
-    shortned += trimmed[idx] + "\n";
+  while(shortned.split(' ').length < 80 && idx < trimmed.length) {
+    shortned += trimmed[idx] + ".";
     idx++;
   }
   console.log("Shortened: " + shortned);
@@ -40,9 +40,9 @@ class App extends React.Component {
           text: {},
           summaries: [
             {
-              Schlagzeile: '',
-              Zusammenfassung: '',
-              Hashtag: '',
+              Schlagzeile: 'Schlagzeile',
+              Zusammenfassung: 'Zusammenfassung',
+              Hashtag: '#, #, #,',
             },
           ],
           test: true,
@@ -64,7 +64,7 @@ class App extends React.Component {
                 });
               }}
               onClick={(input) => {
-                createPrompt(input['articleText'], (response) => {
+                createPrompt(trimArticle(input['articleText']), (response) => {
                   this.setState({
                     text: {},
                     summaries: [response],
