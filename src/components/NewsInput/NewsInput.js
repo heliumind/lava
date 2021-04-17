@@ -84,6 +84,7 @@ function NewsInput(props) {
                   color="primary"
                   className={classes.submit}
                   disabled={isSubmitting}
+
                 >
                   Generate
                 </Button>
