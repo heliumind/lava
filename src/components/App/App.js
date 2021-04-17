@@ -11,9 +11,10 @@ import Header from '../Header';
 import NewsInput from '../NewsInput';
 import StoryPreview from '../StoryPreview';
 
-const styles = theme => ({
+const styles = (theme) => ({
   storyPreview: {
-    background: 'radial-gradient(circle, rgba(92,92,92,1) 0%, rgba(0,0,0,1) 100%)'
+    background:
+      'radial-gradient(circle, rgba(92,92,92,1) 0%, rgba(0,0,0,1) 100%)',
   },
   root: {
     padding: '0',
@@ -25,6 +26,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      imgURL: '',
       text: {},
       summaries: [
         {
@@ -35,44 +37,45 @@ class App extends React.Component {
       ],
       test: true,
     };
-
   }
-
-
 
   render() {
     const { classes } = this.props;
-    return (<div>
-      <Header />
-      <Grid container component="main" className={classes.root}>
-        <Grid
+    return (
+      <div>
+        <Header />
+        <Grid container component="main" className={classes.root}>
+          <Grid
             item
             xs={false}
             sm={4}
             md={7}
             elevation={6}
             square
-        >
-          <NewsInput onClick={(input) => {
-            createPrompt(input['articleText'], response => {
-
-              this.setState({
-                text: {},
-                summaries: [
-                  response
-                ],
-                test: true,
-              })
-
-            })
-            }
-          } />
+          >
+            <NewsInput
+              onExtract={(img) => {
+                this.setState({
+                  imgURL: img,
+                });
+              }}
+              onClick={(input) => {
+                createPrompt(input['articleText'], (response) => {
+                  this.setState({
+                    text: {},
+                    summaries: [response],
+                    test: true,
+                  });
+                });
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={8} md={5} className={classes.storyPreview}>
+            <StoryPreview storyState={this.state.summaries[0]}></StoryPreview>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={8} md={5} className={classes.storyPreview}>
-          <StoryPreview storyState={this.state.summaries[0]}></StoryPreview>
-        </Grid>
-      </Grid>
-    </div>)
+      </div>
+    );
   }
 }
 
