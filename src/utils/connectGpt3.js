@@ -62,10 +62,18 @@ async function fetchGpt3Response(prompt, url, gptParams){
       data: gptParams,
       headers: headers
     }).then((response) => {
-      console.log(response.data.choices[0].text);
+      parseResponse(response.data.choices[0].text);
     }, (error) => {
       console.log(error);
     });
+}
+
+function parseResponse(text){
+  var arrayOfLines = text.match(/[^\r\n]+/g);
+  console.log("Array of Lines", arrayOfLines);
+  var result = {"Schlagzeile": arrayOfLines[1].substring(3), "Zusammenfassung": arrayOfLines[2].substring(3), "Hashtag": arrayOfLines[3].substring(3)};
+  console.log("Result", result);
+  return result;
 }
 
 export default createPrompt;
