@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import clsx from 'clsx';
 import { green } from '@material-ui/core/colors';
@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    position: 'relative',
   },
   buttonSuccess: {
     backgroundColor: green[500],
@@ -36,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 function ArticleURL(props) {
   const classes = useStyles();
-  const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const buttonClassname = clsx({
     [classes.buttonSuccess]: success,
@@ -47,7 +48,6 @@ function ArticleURL(props) {
     <Formik
       initialValues={{ articleURL: '' }}
       onSubmit={(data, { setSubmitting, resetForm }) => {
-        setSubmitting(true);
         setSuccess(false);
         setLoading(true);
         // get text
@@ -56,19 +56,11 @@ function ArticleURL(props) {
           props.onExtract(out.text);
         });
         setLoading(false);
-        setSubmitting(false);
         setSuccess(true);
         resetForm();
       }}
     >
-      {({
-        values,
-        isSubmitting,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        resetForm,
-      }) => (
+      {({ values, handleChange, handleBlur, handleSubmit, resetForm }) => (
         <Form className={classes.form}>
           <Typography variant="h6">Article Input</Typography>
           <Grid container spacing={2}>
@@ -91,7 +83,7 @@ function ArticleURL(props) {
                   variant="contained"
                   color="primary"
                   className={buttonClassname}
-                  disabled={isSubmitting}
+                  disabled={loading}
                 >
                   Extract
                 </Button>
