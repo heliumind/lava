@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import extractSiteContent from '../../utils/htmlextractor'
+import extractSiteContent from '../../../utils/htmlextractor'
 
 class ExtractedText extends Component {
 
