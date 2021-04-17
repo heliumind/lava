@@ -9,11 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Header from '../Header';
 import NewsInput from '../NewsInput';
+import StoryPreview from '../StoryPreview';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100vh',
-  },
   image: {
     backgroundImage: 'url(https://source.unsplash.com/random)',
     backgroundRepeat: 'no-repeat',
@@ -24,27 +22,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
-  paper: {
-    margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
   root: {
     paddingTop: '20px',
-    paddingLeft: '80px',
-    paddingRight: '80px',
+    paddingLeft: '50px',
+    paddingRight: '50px',
     height: '100vh',
   },
 }));
@@ -71,7 +52,7 @@ function App() {
           <NewsInput />
         </Grid>
         <Grid item xs={12} sm={8} md={5} className={classes.image}>
-          Story preview
+          <StoryPreview></StoryPreview>
         </Grid>
       </Grid>
     </div>
