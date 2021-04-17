@@ -35,16 +35,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgURL: '',
-      text: {},
-      summaries: [
-        {
-          Schlagzeile: '',
-          Zusammenfassung: '',
-          Hashtag: '',
-        },
-      ],
-      test: true,
+          imgURL: '',
+          imgPosition: '',
+          text: {},
+          summaries: [
+            {
+              Schlagzeile: '',
+              Zusammenfassung: '',
+              Hashtag: '',
+            },
+          ],
+          test: true,
     };
   }
 
@@ -58,7 +59,8 @@ class App extends React.Component {
             <NewsInput
               onExtract={(img) => {
                 this.setState({
-                  imgURL: img,
+                    imgURL: img,
+                    imgPosition: 'center',
                 });
               }}
               onClick={(input) => {
@@ -74,7 +76,28 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={12} sm={8} md={5} className={classes.storyPreview}>
             {console.log(this.state.imgURL)}
-            <StoryPreview storyState={this.state.summaries[0]} imgURL={this.state.imgURL}></StoryPreview>
+            <StoryPreview storyState={this.state.summaries[0]}
+                          imgURL={this.state.imgURL}
+                          imgPosition={this.state.imgPosition}
+                          moveImg={() => {
+                              switch (this.state.imgPosition) {
+                                  case 'right':
+                                      this.setState({
+                                          imgPosition: 'center',
+                                      });
+                                      break;
+                                  case 'center':
+                                      this.setState({
+                                          imgPosition: 'left',
+                                      });
+                                      break;
+                                  default:
+                                      this.setState({
+                                          imgPosition: 'right',
+                                      });
+                              }
+                          }}
+            />
           </Grid>
         </Grid>
       </div>
