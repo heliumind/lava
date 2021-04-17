@@ -6,7 +6,7 @@ function extractSiteContent(url, callback) {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var json = JSON.parse(this.responseText);
-            callback(json['img'] + "\n" + json['text']);
+            callback(json);
         }
     };
     xhttp.open("POST", "https://denizdaum.de/gtp3/crawl.php", true);

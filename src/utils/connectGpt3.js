@@ -6,14 +6,14 @@ import axios from 'axios';
 
 const GPT3_ENDPOINT = "https://api.openai.com/v1/engines/davinci/completions";
 const GPT3_PARAMS = {
-  "max_tokens": 150,
+  "max_tokens": 250,
   "temperature": 0.3,
   "top_p": 1,
   "presence_penalty": 1,
   "frequency_penalty": 1,
   "n": 1,
   "best_of": 1,
-  "stop": "\n\n"
+  "stop": "Lese diese"
 };
 
 function generateExample(text, response){

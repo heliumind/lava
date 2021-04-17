@@ -133,7 +133,13 @@ storyText: {
 
 }));
 
-function StoryPreview() {
+
+function getNthHashtag(hashtags, index) {
+    hashtags = hashtags.split(", ")
+    return hashtags.length > index ? hashtags[index] : "";
+}
+
+function StoryPreview(props) {
   const classes = useStyles();
 
   return (
@@ -156,19 +162,19 @@ function StoryPreview() {
             <div className={classes.storyImg}>
                 <div className={classes.hashtagsWrapper}>
                     <div>
-                        <span className={classes.hashtag}>#Bundestagswahl</span>
-                        <span className={classes.hashtag}>#Söder</span>
-                        <span className={classes.hashtag}>#Laschet</span>
+                        <span className={classes.hashtag}>{getNthHashtag(props.storyState.Hashtag, 0)}</span>
+                        <span className={classes.hashtag}>{getNthHashtag(props.storyState.Hashtag, 1)}</span>
+                        <span className={classes.hashtag}>{getNthHashtag(props.storyState.Hashtag, 2)}</span>
                     </div>
                 </div>
             </div>
             <div className={classes.storyContent}>
                 <div className={classes.storyTitleWrapper}>
-                    <div className={classes.storyTitle}>"Stimmung aggressiv"</div>
+                    <div className={classes.storyTitle}>{props.storyState.Schlagzeile}</div>
                 </div>
                 <div className={classes.storyText}>
                 <p>
-                Im Kampf um die Unions-Kanzlerkandidatur ist weiter keine Einigung zwischen CDU-Chef Laschet und dem CSU-Vorsitzenden Söder in Sicht.
+                    {props.storyState.Zusammenfassung}
                 </p>
                 </div>
 

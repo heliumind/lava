@@ -38,17 +38,9 @@ class App extends React.Component {
       test: true,
     };
 
-
-    fetch(article)
-        .then((response) => response.text())
-        .then((text) => createPrompt(text));
   }
 
-  setText(input) {
-    this.setState({
-      text: input,
-    });
-  }
+
 
   render() {
     const { classes } = this.props;
@@ -64,10 +56,23 @@ class App extends React.Component {
             elevation={6}
             square
         >
-          <NewsInput onClick={(input) => this.setText(input)} />
+          <NewsInput onClick={(input) => {
+            createPrompt(input['articleText'], response => {
+
+              this.setState({
+                text: {},
+                summaries: [
+                  response
+                ],
+                test: true,
+              })
+
+            })
+            }
+          } />
         </Grid>
         <Grid item xs={12} sm={8} md={5} className={classes.storyPreview}>
-          <StoryPreview></StoryPreview>
+          <StoryPreview storyState={this.state.summaries[0]}></StoryPreview>
         </Grid>
       </Grid>
     </div>)
