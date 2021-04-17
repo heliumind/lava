@@ -7,6 +7,7 @@ import Header from '../Header';
 import NewsInput from '../NewsInput';
 import StoryPreview from '../StoryPreview';
 
+
 const styles = (theme) => ({
   storyPreview: {
     background:
@@ -64,12 +65,22 @@ class App extends React.Component {
                 });
               }}
               onClick={(input) => {
-                createPrompt(trimArticle(input['articleText']), (response) => {
+                createPrompt(trimArticle(input['articleText']), [(response) => {
                   this.setState({
                     text: {},
                     summaries: [response],
                     test: true,
-                  });
+                  }, (response) => {
+                  this.setState({
+                    text: {},
+                    summaries: [response],
+                    test: true,
+                  },(response) => {
+                  this.setState({
+                    text: {},
+                    summaries: [response],
+                    test: true,
+                  }]);
                 });
               }}
             />
