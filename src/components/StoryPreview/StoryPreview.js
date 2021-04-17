@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import InstaStory from '../InstaStory';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -16,9 +17,12 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     fontWeight: 'bold',
     margin: '1em 0',
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   title: {
     fontSize: '2.5em',
+    width: '50%'
   },
   story: {
     width: '32em',
@@ -89,6 +93,7 @@ function StoryPreview(props) {
     <div className={classes.container}>
       <div className={classes.titleWrapper}>
         <div className={classes.title}>Vorschau</div>
+        <Button size="small" color="secondary">Bild anpassen</Button>
       </div>
       <div className={classes.story}>
         <div className={classes.storyTop}>
