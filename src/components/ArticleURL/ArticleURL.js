@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
+import clsx from 'clsx';
+import { green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import extractSiteContent from '../../utils/htmlextractor';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,23 +18,47 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
 function ArticleURL(props) {
   const classes = useStyles();
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+
+  const buttonClassname = clsx({
+    [classes.buttonSuccess]: success,
+  });
 
   return (
     <Formik
       initialValues={{ articleURL: '' }}
-      onSubmit={(data, { setSubmitting }) => {
+      onSubmit={(data, { setSubmitting, resetForm }) => {
         setSubmitting(true);
+        setSuccess(false);
+        setLoading(true);
         // get text
         extractSiteContent(data.articleURL, (out) => {
           props.onClick(out.img);
           props.onExtract(out.text);
         });
-        // put in textfield
+        setLoading(false);
         setSubmitting(false);
+        setSuccess(true);
+        resetForm();
       }}
     >
       {({
@@ -45,7 +72,7 @@ function ArticleURL(props) {
         <Form className={classes.form}>
           <Typography variant="h6">Article Input</Typography>
           <Grid container spacing={2}>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
               <Field
                 variant="outlined"
                 margin="normal"
@@ -57,16 +84,24 @@ function ArticleURL(props) {
                 as={TextField}
               />
             </Grid>
-            <Grid item>
-              <Button
-                type="submit"
-                variant="outlined"
-                color="primary"
-                className={classes.submit}
-                disabled={isSubmitting}
-              >
-                Extract
-              </Button>
+            <Grid item xs={1}>
+              <div className={classes.submit}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={buttonClassname}
+                  disabled={isSubmitting}
+                >
+                  Extract
+                </Button>
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    className={classes.buttonProgress}
+                  />
+                )}
+              </div>
             </Grid>
           </Grid>
           <Typography variant="body">or</Typography>

@@ -86,7 +86,10 @@ function NewsInput(props) {
                   variant="outlined"
                   color="primary"
                   className={classes.submit}
-                  onClick={resetForm}
+                  onClick={() => {
+                    setArticle('');
+                    resetForm();
+                  }}
                 >
                   Clear
                 </Button>
