@@ -62,7 +62,7 @@ class App extends React.Component {
                 });
               }}
               onClick={(input) => {
-                createPrompt(trimArticle(input['articleText']), (response) => {
+                createPrompt(input['articleText'], (response) => {
                   this.setState({
                     text: {},
                     summaries: [response],
