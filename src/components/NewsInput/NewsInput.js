@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import ArticleURL from '../ArticleURL';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,13 +24,18 @@ const useStyles = makeStyles((theme) => ({
 
 function NewsInput(props) {
   const classes = useStyles();
+  const [article, setArticle] = useState('');
 
   return (
     <div className={classes.paper}>
+      <ArticleURL
+        onClick={(input) => props.onExtract(input)}
+        onExtract={(text) => setArticle(text)}
+      />
       <Formik
+        enableReinitialize="true"
         initialValues={{
-          articleURL: '',
-          articleText: '',
+          articleText: article,
         }}
         onSubmit={(data, { setSubmitting }) => {
           setSubmitting(true);
@@ -51,18 +54,6 @@ function NewsInput(props) {
           resetForm,
         }) => (
           <Form className={classes.form}>
-            <Typography variant="h6">Article Input</Typography>
-            <Field
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="url"
-              label="Article URL"
-              name="articleURL"
-              type="url"
-              as={TextField}
-            />
-            <Typography variant="body">or</Typography>
             <Field
               variant="outlined"
               margin="normal"
@@ -84,7 +75,6 @@ function NewsInput(props) {
                   color="primary"
                   className={classes.submit}
                   disabled={isSubmitting}
-
                 >
                   Generate
                 </Button>
