@@ -11,16 +11,10 @@ import Header from '../Header';
 import NewsInput from '../NewsInput';
 import StoryPreview from '../StoryPreview';
 
-const styles = theme => ({
-  image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'light'
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+const useStyles = makeStyles((theme) => ({
+  storyPreview: {
+    background: 'rgb(92,92,92)',
+    background: 'radial-gradient(circle, rgba(92,92,92,1) 0%, rgba(0,0,0,1) 100%)'
   },
   root: {
     paddingTop: '20px',
@@ -28,7 +22,7 @@ const styles = theme => ({
     paddingRight: '50px',
     height: '100vh',
   },
-});
+}));
 
 class App extends React.Component {
   constructor(props) {
@@ -73,7 +67,7 @@ class App extends React.Component {
         >
           <NewsInput onClick={(input) => this.setText(input)} />
         </Grid>
-        <Grid item xs={12} sm={8} md={5} className={classes.image}>
+        <Grid item xs={12} sm={8} md={5} className={classes.storyPreview}>
           <StoryPreview></StoryPreview>
         </Grid>
       </Grid>

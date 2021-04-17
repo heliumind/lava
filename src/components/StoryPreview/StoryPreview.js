@@ -18,13 +18,21 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    fontSize: '10px'
+  },
+  titleWrapper: {
+    width: '32em',
+    textAlign: "left",
+    color: "#fff",
+    fontWeight: 'bold',
+    margin: '1em 0'
   },
   title: {
-    textAlign: "left"
+      fontSize: '2.5em'
   },
   story: {
-    width: '450px',
-    height: '800px',
+    width: '32em',
+    height: '57em',
     backgroundColor: "red",
     borderRadius: '8px',
     overflow: 'hidden',
@@ -43,69 +51,85 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: '0px',
     width: '100%',
-    padding: '15px',
+    padding: '1em',
     zIndex: '20'
 
   },
   storyBar: {
     width: '100%',
-    height: '5px',
+    height: '0.3em',
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: '5px',
   },
   storyBarProgress: {
     width: '50%',
-    height: '5px',
+    height: '100%',
     backgroundColor: '#FFFFFF',
     borderRadius: '5px',
   },
   storyInfo: {
-    margin: '20px 0px',
+    margin: '1em 0px',
     color: '#ffffff'
 
   },
   storyLogo: {
     display: 'inline-block',
-    marginBottom: '-10px',
-    marginRight: '10px',
-    width: '30px',
-    height: '30px',
+    marginBottom: '-0.8em',
+    marginRight: '0.8em',
+    width: '2.5em',
+    height: '2.5em',
     borderRadius: '100%',
     backgroundColor: '#33AAFF'
   },
 storyTime: {
     display: 'inline-block',
-    marginLeft: '15px',
+    marginLeft: '1em',
     color: '#aaaaaa'
     },
-    storyImg: {
-        height: '60%',
+storyImg: {
+    position: 'relative',
+    height: '60%',
+    width: '100%',
+    backgroundImage: 'url("https://img.br.de/66e5975b-3efc-49c8-bbd7-9522b0658815.jpeg?q=80&rect=8%2C174%2C5255%2C2958&w=2000")',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'right',
+    },
+    hashtagsWrapper: {
+        position: 'absolute',
+        bottom: '0px',
         width: '100%',
-        backgroundImage: 'url("https://img.br.de/66e5975b-3efc-49c8-bbd7-9522b0658815.jpeg?q=80&rect=8%2C174%2C5255%2C2958&w=2000")',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'left',
-
-        },
-    storyContent: {
-        height: '40%',
-        width: '100%',
-        padding: '45px',
-        backgroundColor: '#FFF',
-        textAlign: 'center',
+        minHeight: '20%',
+        padding: '0.5em 3em',
+        display: 'flex',
+        alignItems: 'flex-end',
+        background: 'rgb(0,0,0)',
+        background: 'linear-gradient(0deg, rgba(0,0,0,0.798739564185049) 0%, rgba(0,0,0,0) 100%)',
+        color: '#fff',
+        fontSize: '1.2em'
     },
-    storyTitleWrapper: {
-        fontSize: '2rem',
-        fontWeight: 'bold',
-        backgroundColor: '#222'
+    hashtag: {
+        marginRight: '1.2em'
     },
-    storyTitle: {
-        color: '#fff'
-    },
-    storyText: {
-        textAlign: 'left',
-        fontSize: '1.2rem',
-    },
+storyContent: {
+    height: '40%',
+    width: '100%',
+    padding: '3em',
+    backgroundColor: '#FFF',
+    textAlign: 'center',
+},
+storyTitleWrapper: {
+    fontSize: '2em',
+    fontWeight: 'bold',
+    backgroundColor: '#222'
+},
+storyTitle: {
+    color: '#fff'
+},
+storyText: {
+    textAlign: 'left',
+    fontSize: '1.5em',
+},
 
 }));
 
@@ -114,7 +138,9 @@ function StoryPreview() {
 
   return (
     <div className={classes.container}>
-        <h2 className={classes.title}>Vorschau</h2>
+        <div className={classes.titleWrapper}>
+            <div className={classes.title}>Vorschau</div>
+            </div>
         <div className={classes.story}>
             <div className={classes.storyTop}>
                 <div className={classes.storyBar}>
@@ -127,7 +153,15 @@ function StoryPreview() {
                 </div>
             </div>
             <div className={classes.gradient}></div>
-            <div className={classes.storyImg}></div>
+            <div className={classes.storyImg}>
+                <div className={classes.hashtagsWrapper}>
+                    <div>
+                        <span className={classes.hashtag}>#Bundestagswahl</span>
+                        <span className={classes.hashtag}>#Söder</span>
+                        <span className={classes.hashtag}>#Laschet</span>
+                    </div>
+                </div>
+            </div>
             <div className={classes.storyContent}>
                 <div className={classes.storyTitleWrapper}>
                     <div className={classes.storyTitle}>"Stimmung aggressiv"</div>
@@ -140,7 +174,6 @@ function StoryPreview() {
 
             </div>
         </div>
-        <p>StoryPreview</p>
     </div>
   );
 }
