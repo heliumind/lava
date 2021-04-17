@@ -65,24 +65,29 @@ class App extends React.Component {
                 });
               }}
               onClick={(input) => {
-                createPrompt(trimArticle(input['articleText']), [(response) => {
-                  this.setState({
-                    text: {},
-                    summaries: [response],
-                    test: true,
-                  }, (response) => {
-                  this.setState({
-                    text: {},
-                    summaries: [response],
-                    test: true,
-                  },(response) => {
-                  this.setState({
-                    text: {},
-                    summaries: [response],
-                    test: true,
-                  }]);
-                });
-              }}
+                createPrompt(trimArticle(input['articleText']), [
+                    (response) => {
+                      this.setState({
+                        text: {},
+                        summaries: [response],
+                        test: true,
+                      })
+                    },
+                    (response) => {
+                      this.setState({
+                        text: {},
+                        summaries: [response],
+                        test: true,
+                      })
+                    },
+                    (response) => {
+                    this.setState({
+                        text: {},
+                        summaries: [response],
+                        test: true,
+                    })
+                    }])}}
+
             />
           </Grid>
           <Grid item xs={12} sm={8} md={5} className={classes.storyPreview}>
