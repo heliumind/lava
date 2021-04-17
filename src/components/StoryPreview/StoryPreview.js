@@ -149,6 +149,9 @@ function trimSummary(storyState) {
 function StoryPreview(props) {
   const classes = useStyles();
 
+  console.log("State:");
+  console.log(props.storyState);
+
   return (
     <div className={classes.container}>
       <div className={classes.titleWrapper}>
@@ -181,8 +184,8 @@ function StoryPreview(props) {
         </div>
         <div className={classes.gradient}></div>
         <div className={classes.instaStories}>
-        <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState)}></InstaStory>
-        <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState)}></InstaStory>
+        <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState.summaryMain)}></InstaStory>
+        <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState.summaryEasy)}></InstaStory>
       </div>
       </div>
     </div>

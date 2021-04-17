@@ -34,21 +34,31 @@ function trimArticle(text) {
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {
+      super(props);
+      this.state = {
           imgURL: '',
           imgPosition: '',
-          text: {},
-          summaries: [
-            {
-              Schlagzeile: 'Schlagzeile',
-              Zusammenfassung: 'Zusammenfassung',
-              Hashtag: '#, #, #,',
-            },
-          ],
-          test: true,
-    };
+
+          summaries: {
+              summaryMain: {
+                  Schlagzeile: 'Schlagzeile',
+                  Zusammenfassung: 'Zusammenfassung',
+                  Hashtag: '#, #, #',
+              },
+              summaryEasy: {
+                  Schlagzeile: 'Schlagzeile',
+                  Zusammenfassung: 'Zusammenfassung',
+                  Hashtag: '#, #, #',
+              },
+              summaryHard: {
+                  Schlagzeile: 'Schlagzeile',
+                  Zusammenfassung: 'Zusammenfassung',
+                  Hashtag: '#, #, #',
+              }
+          }
+      };
   }
+
 
   render() {
     const { classes } = this.props;
@@ -68,31 +78,40 @@ class App extends React.Component {
                 createPrompt(trimArticle(input['articleText']), [
                     (response) => {
                       this.setState({
-                        text: {},
-                        summaries: [response],
-                        test: true,
-                      })
+                          summaries:{
+                              summaryMain: response,
+                              summaryEasy: response,
+                              summaryHard: response
+                      }})
                     },
                     (response) => {
-                      this.setState({
-                        text: {},
-                        summaries: [response],
-                        test: true,
-                      })
+                    console.log("Easy: " + response)
+                      var obj = Object.assign({}, this.state.summaries.summaryMain);
+                      obj.Zusammenfassung = response;
+
+                        this.setState({
+                            summaries:Object.assign(this.state.summaries, {
+                                summaryEasy: obj
+                            })
+                        })
                     },
                     (response) => {
-                    this.setState({
-                        text: {},
-                        summaries: [response],
-                        test: true,
-                    })
-                    }])}}
+                        console.log("Hard: " + response)
+                        var obj = Object.assign({}, this.state.summaries.summaryMain);
+                        obj.Zusammenfassung = response;
+                        this.setState({
+                            summaries:Object.assign(this.state.summaries, {
+                                summaryHard: obj
+                            })
+                        })
+                    }], 'base')
+              }}
 
             />
           </Grid>
           <Grid item xs={12} sm={8} md={5} className={classes.storyPreview}>
             {console.log(this.state.imgURL)}
-            <StoryPreview storyState={this.state.summaries[0]}
+            <StoryPreview storyState={this.state.summaries}
                           imgURL={this.state.imgURL}
                           imgPosition={this.state.imgPosition}
                           moveImg={() => {
