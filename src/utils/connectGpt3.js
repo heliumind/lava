@@ -1,24 +1,21 @@
 import axios from 'axios';
 
-async function fetchGpt3Response(url, prompt, max_tokens, temperature,frequency_penalty ){
+async function fetchGpt3Response(prompt, url, gptParams){
     const apiKey = process.env.REACT_APP_OPENAI_SECRET_KEY
-    const params = {
-      "prompt": prompt,
-      "max_tokens": max_tokens,
-      "temperature": temperature,
-      "frequency_penalty": frequency_penalty
-    };
     const headers = {
       'Authorization': `Bearer ${apiKey}`,
     };
+    gptParams.prompt = prompt;
+    console.log(gptParams);
+    console.log(prompt);
 
     axios({
       method: 'post',
       url: url,
-      data: params,
+      data: gptParams,
       headers: headers
     }).then((response) => {
-      return response.data.choices[0].text;
+      console.log(response.data.choices[0].text);
     }, (error) => {
       console.log(error);
     });
