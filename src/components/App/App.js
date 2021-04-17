@@ -1,12 +1,8 @@
 import React from 'react';
-import logo from '../../assets/logo.svg';
 import './App.css';
 import createPrompt from '../../utils/connectGpt3';
-import article from '../../assets/samples/article.txt';
-import { makeStyles, withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Header from '../Header';
 import NewsInput from '../NewsInput';
 import StoryPreview from '../StoryPreview';
@@ -45,14 +41,7 @@ class App extends React.Component {
       <div>
         <Header />
         <Grid container component="main" className={classes.root}>
-          <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
-            elevation={6}
-            square
-          >
+          <Grid item xs={false} sm={4} md={7} elevation={6} square>
             <NewsInput
               onExtract={(img) => {
                 this.setState({

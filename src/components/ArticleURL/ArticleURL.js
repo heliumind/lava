@@ -28,6 +28,7 @@ function ArticleURL(props) {
         // get text
         extractSiteContent(data.articleURL, (out) => {
           props.onClick(out.img);
+          props.onExtract(out.text);
         });
         // put in textfield
         setSubmitting(false);
@@ -52,7 +53,7 @@ function ArticleURL(props) {
                 id="url"
                 label="Article URL"
                 name="articleURL"
-                type="text"
+                type="url"
                 as={TextField}
               />
             </Grid>

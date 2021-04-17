@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ArticleURL from '../ArticleURL';
 
@@ -25,13 +24,18 @@ const useStyles = makeStyles((theme) => ({
 
 function NewsInput(props) {
   const classes = useStyles();
+  const [article, setArticle] = useState('');
 
   return (
     <div className={classes.paper}>
-      <ArticleURL onClick={(input) => props.onExtract(input)} />
+      <ArticleURL
+        onClick={(input) => props.onExtract(input)}
+        onExtract={(text) => setArticle(text)}
+      />
       <Formik
+        enableReinitialize="true"
         initialValues={{
-          articleText: '',
+          articleText: article,
         }}
         onSubmit={(data, { setSubmitting }) => {
           setSubmitting(true);
