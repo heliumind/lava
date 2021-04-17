@@ -184,6 +184,7 @@ function StoryPreview(props) {
         <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState)}></InstaStory>
         <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState)}></InstaStory>
       </div>
+      </div>
     </div>
   );
 }
