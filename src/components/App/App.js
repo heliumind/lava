@@ -18,6 +18,19 @@ const styles = (theme) => ({
   },
 });
 
+function trimArticle(text) {
+  var trimmed = text.split('\n');
+  var shortned = "";
+
+  var idx = 0;
+  while(shortned.split(' ').length < 150 && idx < trimmed.length) {
+    shortned += trimmed[idx] + "\n";
+    idx++;
+  }
+  console.log("Shortened: " + shortned);
+  return shortned;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +62,7 @@ class App extends React.Component {
                 });
               }}
               onClick={(input) => {
-                createPrompt(input['articleText'], (response) => {
+                createPrompt(trimArticle(input['articleText']), (response) => {
                   this.setState({
                     text: {},
                     summaries: [response],
@@ -60,7 +73,7 @@ class App extends React.Component {
             />
           </Grid>
           <Grid item xs={12} sm={8} md={5} className={classes.storyPreview}>
-            <StoryPreview storyState={this.state.summaries[0]}></StoryPreview>
+            <StoryPreview storyState={this.state.summaries[0]} imgState={this.state.imgURL}></StoryPreview>
           </Grid>
         </Grid>
       </div>
