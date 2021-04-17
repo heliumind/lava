@@ -47,8 +47,8 @@ class App extends React.Component {
 
 
     fetch(article)
-      .then((response) => response.text())
-      .then((text) => createPrompt(text));
+        .then((response) => response.text())
+        .then((text) => createPrompt(text));
   }
 
   setText(input) {
@@ -63,13 +63,13 @@ class App extends React.Component {
       <Header />
       <Grid container component="main" className={classes.root}>
         <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          component={Paper}
-          elevation={6}
-          square
+            item
+            xs={false}
+            sm={4}
+            md={7}
+            component={Paper}
+            elevation={6}
+            square
         >
           <NewsInput onClick={(input) => this.setText(input)} />
         </Grid>
