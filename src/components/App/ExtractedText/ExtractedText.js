@@ -27,7 +27,7 @@ class ExtractedText extends Component {
 
     componentDidMount() {
 
-        extractSiteContent("https://www.br.de/nachrichten/deutschland-welt/laschet-oder-soeder-entscheidung-in-der-k-frage-rueckt-naeher,SUm1KfA", (txt) => {
+        extractSiteContent("https://www.br.de/nachrichten/wissen/corona-was-bringen-naechtliche-ausgangssperren-possoch-klaert,SUkDPlW", (txt) => {
             this.setState({
                 text: txt
             });
