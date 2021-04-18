@@ -10,11 +10,18 @@ import response21 from '../assets/samples1/response2.txt';
 import example31 from '../assets/samples1/example3.txt';
 import response31 from '../assets/samples1/response3.txt';
 
+import satz1 from '../assets/samples2/satz1.txt';
+import article1 from '../assets/samples2/article1.txt';
+import abstract1 from '../assets/samples2/abstract1.txt';
+import satz2 from '../assets/samples2/satz2.txt';
+import article2 from '../assets/samples2/article2.txt';
+import abstract2 from '../assets/samples2/abstract2.txt';
+
 import axios from 'axios';
 
 const baseSamples = [example1, response1, example2, response2];
 const vereinfachtSamples = [example11, response11, example21, response21, example31, response31];
-const komplexSamples = [];
+const komplexSamples = [satz1, article1, abstract1, satz2, article2, abstract2];
 const base_endpoint = "https://api.openai.com/v1/engines/davinci/completions";
 const base_params = {
   "max_tokens": 150,
@@ -70,7 +77,22 @@ function generateVereinfachtPrompt(text, response){
     prompt = pretext + text + posttext + response + "\n";
   }
   else{
-    prompt = pretext + text + posttext + "\n";
+    prompt = pretext + text + posttext;
+  }
+  return prompt;
+}
+
+function generateKomplexPrompt(satz, article, abstract){
+  const pretext = "Baue aus diesem Satz mit Informationen aus dem genannten Artikel einen wissenschaftlichen Abstract:\n\"\"\"\nSatz: " 
+  const betweentext = "\nArtikel: " 
+  const posttext = "\n\"\"\"\nAbstract: "
+
+  var prompt;
+  if(response != null){
+    prompt = pretext + satz + betweentext + article + posttext + abstract + "\n";
+  }
+  else{
+    prompt = pretext + satz + betweentext + article + posttext;
   }
   return prompt;
 }
@@ -88,7 +110,7 @@ function createPrompt(text, callbacks, stage){
         }
         prompt += basePrompt;
         return prompt;
-    }).then(prompt => fetchGpt3Response(prompt, base_endpoint, base_params, callbacks, stage));
+    }).then(prompt => fetchGpt3Response(prompt, base_endpoint, base_params, callbacks, stage, text));
 }
 
 function createVereinfachtPrompt(text, callbacks, stage){
@@ -104,10 +126,27 @@ function createVereinfachtPrompt(text, callbacks, stage){
         }
         prompt += vereinfachtPrompt;
         return prompt;
-    }).then(prompt => fetchGpt3Response(prompt, vereinfacht_endpoint, vereinfacht_params, callbacks, stage));
+    }).then(prompt => fetchGpt3Response(prompt, vereinfacht_endpoint, vereinfacht_params, callbacks, stage, text));
 }
 
-async function fetchGpt3Response(prompt, url, gptParams, callbacks, stage){
+// TODO: Finish this method
+function createKomplexPrompt(satz_text, article_text, callbacks, stage){
+
+  var komplexPrompt = generateKomplexPrompt(satz_text, article_text,null);
+
+  Promise.all(komplexSamples.map(sample =>
+    fetch(sample).then(resp => resp.text())
+    )).then(texts => {
+        var prompt = "";
+        for(var i = 0 ; i < texts.length - 2; i=i+3){
+          prompt += generateKomplexPrompt(texts[i],texts[i+1], texts[i+2]);
+        }
+        prompt += komplexPrompt;
+        return prompt;
+    }).then(prompt => fetchGpt3Response(prompt, komplex_endpoint, komplex_params, callbacks, stage, article_text));
+}
+
+async function fetchGpt3Response(prompt, url, gptParams, callbacks, stage, original){
     const apiKey = process.env.REACT_APP_OPENAI_SECRET_KEY
     const headers = {
       'Authorization': `Bearer ${apiKey}`,
@@ -123,9 +162,13 @@ async function fetchGpt3Response(prompt, url, gptParams, callbacks, stage){
       headers: headers
     }).then((response) => {
       if(stage === "base"){
-        parseBaseResponse(response.data.choices[0].text, callbacks[0],callbacks);
+        result = parseBaseResponse(response.data.choices[0].text, callbacks[0]);
+        createVereinfachtPrompt(result[2], callbacks, "vereinfacht");
+        createKomplexPrompt(result[2],original, callbacks, "komplex");
       }else if(stage === "vereinfacht"){
-        parseVereinfachtResponse(response.data.choices[0].text, callbacks[1],callbacks);
+        parseVereinfachtResponse(response.data.choices[0].text, callbacks[1]);
+      }else if(stage === "komplex"){
+        parseKomplexResponse(response.data.choices[0].text, callback[2]);
       }
       
     }, (error) => {
@@ -133,7 +176,7 @@ async function fetchGpt3Response(prompt, url, gptParams, callbacks, stage){
     });
 }
 
-function parseBaseResponse(text, callback, callbacks){
+function parseBaseResponse(text, callback){
   var arrayOfLines = text.match(/[^\r\n]+/g);
   console.log("Array of Lines", arrayOfLines);
   var result;
@@ -144,11 +187,15 @@ function parseBaseResponse(text, callback, callbacks){
   }
   console.log("Result", result);
   callback(result);
-  createVereinfachtPrompt(arrayOfLines[2].substring(3), callbacks, "vereinfacht");
   return result;
 }
 
-function parseVereinfachtResponse(text, callback,callbacks){
+function parseVereinfachtResponse(text, callback){
+  callback(text);
+  console.log(text);
+}
+
+function parseKomplexResponse(text, callback){
   callback(text);
   console.log(text);
 }
