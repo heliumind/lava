@@ -35,18 +35,18 @@ const base_params = {
 };
 const vereinfacht_endpoint = "https://api.openai.com/v1/engines/curie-instruct-beta/completions";
 const vereinfacht_params = {
-  "max_tokens": 100,
-  "temperature": 0.7,
+  "max_tokens": 200,
+  "temperature": 0.6,
   "top_p": 0.6,
   "presence_penalty": 1,
-  "frequency_penalty": 0,
+  "frequency_penalty": 1,
   "n": 1,
   "best_of": 1,
-  "stop": "\n"
+  "stop": "\nOriginal:"
 };
 const komplex_endpoint = "https://api.openai.com/v1/engines/curie-instruct-beta/completions";
 const komplex_params = {
-  "max_tokens": 120,
+  "max_tokens": 150,
   "temperature": 0.7,
   "top_p": 1,
   "presence_penalty": 1,
@@ -70,22 +70,23 @@ function generateBasePrompt(text, response){
 }
 
 function generateVereinfachtPrompt(text, response){
-  const pretext = '\nOriginal: '
-  const posttext = '\nVereinfacht: '
+  const pretext = '\nOriginal:';
+  const betweentext = '\nWiederholt:'
+  const posttext = '\nVereinfacht:';
   var prompt;
   if(response != null){
-    prompt = pretext + text + posttext + response + "\n";
+    prompt = pretext + text + betweentext+ text + posttext + response + "\n";
   }
   else{
-    prompt = pretext + text + posttext;
+    prompt = pretext + text + betweentext+ text + posttext;
   }
   return prompt;
 }
 
 function generateKomplexPrompt(satz, article, abstract){
   const pretext = "\nBaue aus diesem Satz mit Informationen aus dem genannten Artikel einen wissenschaftlichen Abstract:\n\"\"\"\nSatz: " 
-  const betweentext = "\nArtikel: " 
-  const posttext = "\n\"\"\"\nAbstract: "
+  const betweentext = "\nArtikel:" 
+  const posttext = "\n\"\"\"\nAbstract:"
 
   var prompt;
   if(abstract != null){
