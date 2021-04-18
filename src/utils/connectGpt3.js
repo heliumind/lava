@@ -97,7 +97,7 @@ function generateKomplexPrompt(satz, article, abstract){
   return prompt;
 }
 
-function createPrompt(text, callback){
+export function createPrompt(text, callback){
 
   var basePrompt = generateBasePrompt(text,null);
   
@@ -114,7 +114,7 @@ function createPrompt(text, callback){
 
 }
 
-function createEasyPrompt(text, callback){
+export function createEasyPrompt(text, callback){
 
   var vereinfachtPrompt = generateVereinfachtPrompt(text,null);
 
@@ -131,7 +131,7 @@ function createEasyPrompt(text, callback){
 
 }
 
-function createComplexPrompt(satz_text, article_text, callback){
+export function createComplexPrompt(satz_text, article_text, callback){
 
   var komplexPrompt = generateKomplexPrompt(satz_text, article_text,null);
 
@@ -209,5 +209,3 @@ function parseBaseResponse(text){
   console.log("Result", result);
   return result;
 }
-
-export default {createPrompt, createEasyPrompt, createComplexPrompt};
