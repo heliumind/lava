@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import createPrompt from '../../utils/connectGpt3';
+import {createPrompt, createEasyPrompt, createComplexPrompt} from '../../utils/connectGpt3';
 import { withStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import Header from '../Header';
@@ -83,50 +83,39 @@ class App extends React.Component {
                 });
               }}
               onClick={(input) => {
-                createPrompt(
-                  trimArticle(input['articleText']),
-                  [
-                    (response) => {
-                      this.setState({
-                        summaries: {
-                          summaryMain: response,
-                          summaryEasy: response,
-                          summaryHard: response,
-                        },
-                        loading: false,
-                        success: true,
-                      });
-                    },
-                    (response) => {
-                      console.log('Easy: ' + response);
-                      var obj = Object.assign(
-                        {},
-                        this.state.summaries.summaryMain
-                      );
-                      obj.Zusammenfassung = response;
 
-                      this.setState({
-                        summaries: Object.assign(this.state.summaries, {
-                          summaryEasy: obj,
-                        }),
-                      });
-                    },
+                const articleText = trimArticle(input['articleText']);
+                createPrompt(articleText,
                     (response) => {
-                      console.log('Hard: ' + response);
-                      var obj = Object.assign(
-                        {},
-                        this.state.summaries.summaryMain
-                      );
-                      obj.Zusammenfassung = response;
                       this.setState({
-                        summaries: Object.assign(this.state.summaries, {
-                          summaryHard: obj,
-                        }),
+                          summaries:{
+                              summaryMain: response,
+                              summaryEasy: response,
+                              summaryHard: response
+                      }});
+                        createEasyPrompt(response.Zusammenfassung, (easyResponse) => {
+                          console.log("Easy: " + easyResponse);
+                          var obj = Object.assign({}, this.state.summaries.summaryMain);
+                          obj.Zusammenfassung = easyResponse;
+
+                          this.setState({
+                              summaries:Object.assign(this.state.summaries, {
+                                  summaryEasy: obj
+                              })
+                          })
                       });
-                    },
-                  ],
-                  'base'
-                );
+                        createComplexPrompt(response.Zusammenfassung, articleText, (hardResponse) => {
+                          console.log("Hard: " + hardResponse);
+                          var obj = Object.assign({}, this.state.summaries.summaryMain);
+                          obj.Zusammenfassung = hardResponse;
+                          this.setState({
+                              summaries:Object.assign(this.state.summaries, {
+                                  summaryHard: obj
+                              })
+                          })
+                      })
+                    });
+
               }}
             />
           </Grid>
