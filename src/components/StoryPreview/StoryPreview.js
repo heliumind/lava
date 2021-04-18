@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import InstaStory from '../InstaStory';
 import Button from '@material-ui/core/Button';
@@ -158,8 +158,20 @@ function trimSummary(storyState) {
   return storyState;
 }
 
+function selectStoryState(storyState, storyIdx) {
+  switch (storyIdx) {
+    case 1:
+      return trimSummary(storyState.summaryHard);
+    case 2:
+      return trimSummary(storyState.summaryEasy);
+    default:
+      return trimSummary(storyState.summaryMain);
+  }
+}
+
 function StoryPreview(props) {
   const classes = useStyles();
+  const [storyIdx, setStoryIdx] = useState(0);
 
   console.log("State:");
   console.log(props.storyState);
@@ -172,13 +184,13 @@ function StoryPreview(props) {
       </div>
       <div className={classes.storyMockup}>
           <div className={classes.arrowWrapper}>
-              <Button className={classes.arrowLeft}>
+              <Button className={classes.arrowLeft} onClick={() => setStoryIdx((storyIdx + 1)%3)}>
                   <div  className={classes.arrowIconLeft}>
                     <ArrowBackIosIcon></ArrowBackIosIcon>
                   </div>
                   
               </Button>
-              <Button className={classes.arrowRight}>
+              <Button className={classes.arrowRight} onClick={() => setStoryIdx((storyIdx + 2)%3)}>
                 <div  className={classes.arrowIconRight}>
                     <ArrowForwardIosIcon></ArrowForwardIosIcon>
                 </div>
@@ -201,9 +213,9 @@ function StoryPreview(props) {
         </div>
         <div className={classes.gradient}></div>
         <div className={classes.instaStories}>
-        <InstaStory display="none" imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState.summaryMain)}></InstaStory>
-        <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState.summaryEasy)}></InstaStory>
-      </div>
+          <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={selectStoryState(props.storyState, storyIdx)}></InstaStory>
+        </div>
+
       </div>
     </div>
   );

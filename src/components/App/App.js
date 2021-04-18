@@ -52,7 +52,7 @@ class App extends React.Component {
               },
               summaryHard: {
                   Schlagzeile: 'Schlagzeile',
-                  Zusammenfassung: 'Zusammenfassung',
+                  Zusammenfassung: 'ZusammenfassungHard',
                   Hashtag: '#, #, #',
               }
           }
