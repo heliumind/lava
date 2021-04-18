@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BRLogo from '../../assets/BR-Logo.png';
+import StoryBar from '../StoryBar';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   storyMockup: {
     width: '32em',
     height: '57em',
-    backgroundColor: 'red',
+    backgroundColor: 'rgb(220,220,220)',
     borderRadius: '8px',
     position: 'relative',
   },
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     left: '0',
     width: '100%',
     height: '20%',
+    borderRadius: '8px 8px 0 0',
     background:
       'transparent linear-gradient(180deg, #000000B2 0%, #00000000 100%) 0% 0% no-repeat padding-box',
     zIndex: '10',
@@ -51,17 +53,10 @@ const useStyles = makeStyles((theme) => ({
     padding: '1em',
     zIndex: '20',
   },
-  storyBar: {
-    width: '100%',
-    height: '0.3em',
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    borderRadius: '5px',
-  },
-  storyBarProgress: {
-    width: '50%',
-    height: '100%',
-    backgroundColor: '#FFFFFF',
-    borderRadius: '5px',
+  storyBarWrapper: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '0.3em'
   },
   storyInfo: {
     margin: '1em 0px',
@@ -170,8 +165,9 @@ function selectStoryState(storyState, storyIdx) {
 }
 
 function StoryPreview(props) {
-  const classes = useStyles();
   const [storyIdx, setStoryIdx] = useState(0);
+  const classes = useStyles(storyIdx);
+
 
   console.log("State:");
   console.log(props.storyState);
@@ -184,22 +180,25 @@ function StoryPreview(props) {
       </div>
       <div className={classes.storyMockup}>
           <div className={classes.arrowWrapper}>
-              <Button className={classes.arrowLeft} onClick={() => setStoryIdx((storyIdx + 1)%3)}>
+              <Button className={classes.arrowLeft} onClick={() => setStoryIdx((storyIdx + 2)%3)}>
                   <div  className={classes.arrowIconLeft}>
                     <ArrowBackIosIcon></ArrowBackIosIcon>
                   </div>
                   
               </Button>
-              <Button className={classes.arrowRight} onClick={() => setStoryIdx((storyIdx + 2)%3)}>
+              <Button className={classes.arrowRight} onClick={() => setStoryIdx((storyIdx + 1)%3)}>
                 <div  className={classes.arrowIconRight}>
                     <ArrowForwardIosIcon></ArrowForwardIosIcon>
                 </div>
               </Button>
           </div>
         <div className={classes.storyTop}>
-          <div className={classes.storyBar}>
-            <div className={classes.storyBarProgress}></div>
+          <div className={classes.storyBarWrapper}>
+            <StoryBar isVisible={storyIdx >= 0}></StoryBar>
+            <StoryBar isVisible={storyIdx >= 1}></StoryBar>
+            <StoryBar isVisible={storyIdx >= 2}></StoryBar>
           </div>
+
           <div className={classes.storyInfo}>
             <div className={classes.storyLogo}>
               <div className={classes.storyLogoImgWrapper}>
