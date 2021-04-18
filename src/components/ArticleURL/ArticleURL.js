@@ -47,7 +47,7 @@ function ArticleURL(props) {
   return (
     <Formik
       initialValues={{ articleURL: '' }}
-      onSubmit={(data, { setSubmitting, resetForm }) => {
+      onSubmit={(data, { resetForm }) => {
         setSuccess(false);
         setLoading(true);
         // get text
@@ -64,7 +64,7 @@ function ArticleURL(props) {
         <Form className={classes.form}>
           <Typography variant="h6">Article Input</Typography>
           <Grid container spacing={2}>
-            <Grid item xs={11}>
+            <Grid item xs={10}>
               <Field
                 variant="outlined"
                 margin="normal"
@@ -76,7 +76,7 @@ function ArticleURL(props) {
                 as={TextField}
               />
             </Grid>
-            <Grid item xs={1}>
+            <Grid item>
               <div className={classes.submit}>
                 <Button
                   type="submit"
