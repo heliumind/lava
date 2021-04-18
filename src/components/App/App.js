@@ -42,17 +42,17 @@ class App extends React.Component {
           summaries: {
               summaryMain: {
                   Schlagzeile: 'Schlagzeile',
-                  Zusammenfassung: 'Zusammenfassung',
+                  Zusammenfassung: 'ZusammenfassungMain',
                   Hashtag: '#, #, #',
               },
               summaryEasy: {
                   Schlagzeile: 'Schlagzeile',
-                  Zusammenfassung: 'Zusammenfassung',
+                  Zusammenfassung: 'ZusammenfassungEasy',
                   Hashtag: '#, #, #',
               },
               summaryHard: {
                   Schlagzeile: 'Schlagzeile',
-                  Zusammenfassung: 'Zusammenfassung',
+                  Zusammenfassung: 'ZusammenfassungHard',
                   Hashtag: '#, #, #',
               }
           }
