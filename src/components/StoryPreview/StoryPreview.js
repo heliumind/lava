@@ -142,8 +142,11 @@ function trimSummary(storyState) {
   var idx = 0;
   while(idx < summarySplit.length && tokens+summarySplit[idx].length < 300){
 
-    summary += summarySplit[idx] + ".";
-    tokens+=summarySplit[idx].length;
+    if(summarySplit[idx].length > 2) {
+      summary += summarySplit[idx] + ".";
+      tokens+=summarySplit[idx].length;
+    }
+
     idx++;
   }
   storyState.Zusammenfassung = summary.replace("..", ".");
