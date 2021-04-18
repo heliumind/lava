@@ -83,7 +83,7 @@ function NewsInput(props) {
               <Grid item>
                 <Button
                   type="reset"
-                  variant="contained"
+                  variant="outlined"
                   color="primary"
                   className={classes.submit}
                   onClick={resetForm}

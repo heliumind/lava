@@ -11,7 +11,7 @@ import StoryPreview from '../StoryPreview';
 const styles = (theme) => ({
   storyPreview: {
     background:
-      'radial-gradient(circle, rgba(92,92,92,1) 0%, rgba(0,0,0,1) 100%)',
+      'radial-gradient(circle, rgba(92,92,92,1) 0%, rgba(50,50,50,1) 100%)',
   },
   root: {
     padding: '0',
@@ -42,12 +42,12 @@ class App extends React.Component {
           summaries: {
               summaryMain: {
                   Schlagzeile: 'Schlagzeile',
-                  Zusammenfassung: 'ZusammenfassungMain',
+                  Zusammenfassung: 'Zusammenfassung Main',
                   Hashtag: '#, #, #',
               },
               summaryEasy: {
                   Schlagzeile: 'Schlagzeile',
-                  Zusammenfassung: 'ZusammenfassungEasy',
+                  Zusammenfassung: 'Zusammenfassung Easy',
                   Hashtag: '#, #, #',
               },
               summaryHard: {

@@ -60,7 +60,7 @@ function ArticleURL(props) {
             <Grid item>
               <Button
                 type="submit"
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 className={classes.submit}
                 disabled={isSubmitting}
