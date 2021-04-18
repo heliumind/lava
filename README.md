@@ -1,4 +1,4 @@
-# Lava Instagram Story Creator
+# Story Lava
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -23,7 +23,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 `.env`:
 
 ```
-REACT_APP_API_KEY=your_api_key
+REACT_APP_OPENAI_SECREY_KEY=your_api_key
 ```
 
 > :warning: **DON'T** post your GPT-3 API key anywhere in internet, especially in your code, when you push it to GitHub.
