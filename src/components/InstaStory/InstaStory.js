@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
   story: {
     width: '32em',
     height: '57em',
-    backgroundColor: 'red',
+    backgroundColor: 'rgb(220,220,220)',
     borderRadius: '8px',
     overflow: 'hidden',
     position: 'relative',

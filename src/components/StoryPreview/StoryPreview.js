@@ -4,6 +4,7 @@ import InstaStory from '../InstaStory';
 import Button from '@material-ui/core/Button';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import BRLogo from '../../assets/BR-Logo.png';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -76,6 +77,17 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '100%',
     backgroundColor: '#33AAFF',
   },
+  storyLogoImgWrapper: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center'
+  },
+  storyLogoImg: {
+    width: '60%',
+    height: 'auto',
+    margin: '0 auto'
+  },
   storyTime: {
     display: 'inline-block',
     marginLeft: '1em',
@@ -109,11 +121,11 @@ const useStyles = makeStyles((theme) => ({
     padding: '0'
   },
   arrowIconLeft: {
-    marginTop: '6px',
-    marginLeft: '7px'
+    marginTop: '8px',
+    marginLeft: '10px'
   },
   arrowIconRight: {
-    marginTop: '6px',
+    marginTop: '8px',
     marginLeft: '4px'
 },
     instaStories: {
@@ -156,7 +168,7 @@ function StoryPreview(props) {
     <div className={classes.container}>
       <div className={classes.titleWrapper}>
         <div className={classes.title}>Vorschau</div>
-        <Button size="small" color="secondary" onClick={() => { props.moveImg()}}>Bild anpassen</Button>
+        <Button size="small" color="primary" onClick={() => { props.moveImg()}}>Bild anpassen</Button>
       </div>
       <div className={classes.storyMockup}>
           <div className={classes.arrowWrapper}>
@@ -177,14 +189,19 @@ function StoryPreview(props) {
             <div className={classes.storyBarProgress}></div>
           </div>
           <div className={classes.storyInfo}>
-            <span className={classes.storyLogo}></span>
+            <div className={classes.storyLogo}>
+              <div className={classes.storyLogoImgWrapper}>
+              <img src={BRLogo} className={classes.storyLogoImg}/>
+              </div>
+              
+            </div>
             <span>Deine Story</span>
             <span className={classes.storyTime}>3h</span>
           </div>
         </div>
         <div className={classes.gradient}></div>
         <div className={classes.instaStories}>
-        <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState.summaryMain)}></InstaStory>
+        <InstaStory display="none" imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState.summaryMain)}></InstaStory>
         <InstaStory imgURL={props.imgURL} imgPosition={props.imgPosition} storyState={trimSummary(props.storyState.summaryEasy)}></InstaStory>
       </div>
       </div>
