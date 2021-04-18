@@ -182,7 +182,7 @@ function fetchGpt3Response(prompt, url, gptParams, callback, stage){
         console.log("This is the Easy Result: ", result);
         callback(result);
       });
-    }else if(stage === "komplex"){
+    }else if(stage === "complex"){
       axios({
         method: 'post',
         url: url,
