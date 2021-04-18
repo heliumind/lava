@@ -25,10 +25,10 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar>
           <InstagramIcon className={classes.menuButton} color="inherit" />
-          <Typography variant="h6" className={classes.title}>
-            Instagram Story Creator
+          <Typography variant="h5" className={classes.title}>
+            Story Lava
           </Typography>
-          <Typography variant="h5" color="inherit">
+          <Typography variant="h6" color="inherit">
             by Team Lava
           </Typography>
         </Toolbar>
