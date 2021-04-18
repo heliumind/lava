@@ -88,7 +88,7 @@ function generateKomplexPrompt(satz, article, abstract){
   const posttext = "\n\"\"\"\nAbstract: "
 
   var prompt;
-  if(response != null){
+  if(abstract != null){
     prompt = pretext + satz + betweentext + article + posttext + abstract + "\n";
   }
   else{
@@ -98,6 +98,7 @@ function generateKomplexPrompt(satz, article, abstract){
 }
 
 function createPrompt(text, callbacks, stage){
+  console.log("I am here");
 
   var basePrompt = generateBasePrompt(text,null);
   
@@ -161,14 +162,16 @@ async function fetchGpt3Response(prompt, url, gptParams, callbacks, stage, origi
       data: gptParams,
       headers: headers
     }).then((response) => {
+      console.log("Finally here");
       if(stage === "base"){
-        result = parseBaseResponse(response.data.choices[0].text, callbacks[0]);
+        console.log("Base executed");
+        var result = parseBaseResponse(response.data.choices[0].text, callbacks[0]);
         createVereinfachtPrompt(result[2], callbacks, "vereinfacht");
         createKomplexPrompt(result[2],original, callbacks, "komplex");
       }else if(stage === "vereinfacht"){
         parseVereinfachtResponse(response.data.choices[0].text, callbacks[1]);
       }else if(stage === "komplex"){
-        parseKomplexResponse(response.data.choices[0].text, callback[2]);
+        parseKomplexResponse(response.data.choices[0].text, callbacks[2]);
       }
       
     }, (error) => {
