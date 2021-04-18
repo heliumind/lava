@@ -39,17 +39,22 @@ const useStyles = makeStyles((theme) => ({
   storyContent: {
     height: '45%',
     width: '100%',
-    padding: '3em',
+    padding: '2em 3em',
     backgroundColor: '#FFF',
     textAlign: 'center',
   },
   storyTitleWrapper: {
     fontSize: '2em',
     fontWeight: 'bold',
-    backgroundColor: '#222',
+    lineHeight: '1.75em',
   },
   storyTitle: {
+    display: 'inline',
     color: '#fff',
+    backgroundColor: '#000',
+    padding: '0.15em',
+    boxDecorationBreak: 'clone',
+    WebkitBoxDecorationBreak: 'clone'
   },
   storyText: {
     textAlign: 'left',
@@ -88,9 +93,9 @@ function InstaStory(props) {
         </div>
         <div className={classes.storyContent}>
           <div className={classes.storyTitleWrapper}>
-            <div className={classes.storyTitle}>
+            <span className={classes.storyTitle}>
               {props.storyState.Schlagzeile}
-            </div>
+            </span>
           </div>
           <div className={classes.storyText}>
             <p>{props.storyState.Zusammenfassung}</p>

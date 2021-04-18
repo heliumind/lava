@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
   arrowLeft: {
       width:'30px',
       height: '30px',
-      backgroundColor: 'rgba(0,0,0,0.2)',
+      backgroundColor: 'rgba(0,0,0,0.3)',
       marginLeft: '-50px',
       borderRadius: '100%',
       minWidth: '0px',
@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
   arrowRight: {
     width:'30px',
     height: '30px',
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    backgroundColor: 'rgba(0,0,0,0.3)',
     marginRight: '-50px',
     borderRadius: '100%',
     minWidth: '0px',
@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
   },
   arrowIconLeft: {
     marginTop: '8px',
-    marginLeft: '10px'
+    marginLeft: '10px',
   },
   arrowIconRight: {
     marginTop: '8px',
@@ -182,13 +182,13 @@ function StoryPreview(props) {
           <div className={classes.arrowWrapper}>
               <Button className={classes.arrowLeft} onClick={() => setStoryIdx((storyIdx + 2)%3)}>
                   <div  className={classes.arrowIconLeft}>
-                    <ArrowBackIosIcon></ArrowBackIosIcon>
+                    <ArrowBackIosIcon color="primary"></ArrowBackIosIcon>
                   </div>
                   
               </Button>
               <Button className={classes.arrowRight} onClick={() => setStoryIdx((storyIdx + 1)%3)}>
                 <div  className={classes.arrowIconRight}>
-                    <ArrowForwardIosIcon></ArrowForwardIosIcon>
+                    <ArrowForwardIosIcon color="primary"></ArrowForwardIosIcon>
                 </div>
               </Button>
           </div>
