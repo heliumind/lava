@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import extractSiteContent from '../../utils/htmlextractor';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,29 +19,23 @@ const useStyles = makeStyles((theme) => ({
 
 function ArticleURL(props) {
   const classes = useStyles();
+  const [loading, setLoading] = useState();
 
   return (
     <Formik
       initialValues={{ articleURL: '' }}
-      onSubmit={(data, { setSubmitting }) => {
-        setSubmitting(true);
+      onSubmit={(data, { resetForm }) => {
+        setLoading(true);
         // get text
         extractSiteContent(data.articleURL, (out) => {
           props.onClick(out.img);
           props.onExtract(out.text);
         });
-        // put in textfield
-        setSubmitting(false);
+        setLoading(false);
+        resetForm();
       }}
     >
-      {({
-        values,
-        isSubmitting,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        resetForm,
-      }) => (
+      {({ values, handleChange, handleBlur, handleSubmit, resetForm }) => (
         <Form className={classes.form}>
           <Typography variant="h6">Article Input</Typography>
           <Grid container spacing={2}>
@@ -60,10 +54,10 @@ function ArticleURL(props) {
             <Grid item>
               <Button
                 type="submit"
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 className={classes.submit}
-                disabled={isSubmitting}
+                disabled={loading}
               >
                 Extract
               </Button>
